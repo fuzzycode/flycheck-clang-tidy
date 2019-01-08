@@ -37,14 +37,14 @@ CMake option to get this output)."
 
 (defun flycheck-clang-tidy-find-default-directory (checker)
   (let ((config_file_location (flycheck-locate-config-file flycheck-clang-tidy checker)))
-    (if config_file_location
-        (file-name-directory config_file_location)
-      (message "Unable to find config file for %s, you need to create .clang-tidy file in your project root" checker))))
-
+    (when config_file_location
+        (file-name-directory config_file_location))))
 
 (defun flycheck-clang-tidy-compdb ()
   "Generate the option for the compilation database file"
-  (concat (file-name-as-directory flycheck-clang-tidy-build-path) "compile_commands.json"))
+  (let ((database (concat (file-name-as-directory flycheck-clang-tidy-build-path) "compile_commands.json")))
+    (when (file-exists-p database)
+      database)))
 
 (defun flycheck-clang-tidy-buffer-is-header ()
   "Determine if current buffer is a header file."
