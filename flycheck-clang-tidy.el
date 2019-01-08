@@ -46,6 +46,12 @@ CMake option to get this output)."
   "Generate the option for the compilation database file"
   (concat (file-name-as-directory flycheck-clang-tidy-build-path) "compile_commands.json"))
 
+(defun flycheck-clang-tidy-buffer-is-header ()
+  "Determine if current buffer is a header file."
+  (when (buffer-file-name)
+    (let ((extension (file-name-extension (buffer-file-name))))
+      ;; capture .h, .hpp, .hxx etc - all start with h
+      (string-equal "h" (substring extension 0 1)))))
 (flycheck-define-checker c/c++-clang-tidy
   "A C/C++ syntax checker using clang-tidy.
 
