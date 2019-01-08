@@ -61,6 +61,7 @@ See URL `https://github.com/ch1bo/flycheck-clang-tidy'."
   ((error line-start (file-name) ":" line ":" column ": error: " (message) line-end)
    (warning line-start (file-name) ":" line ":" column ": warning: " (message) line-end)
    (info line-start (file-name) ":" line ":" column ": note: " (message) line-end))
+  :predicate flycheck-buffer-saved-p
   :modes (c-mode c++-mode)
   :working-directory flycheck-clang-tidy-find-default-directory
   )
