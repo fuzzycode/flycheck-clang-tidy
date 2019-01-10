@@ -52,6 +52,18 @@ CMake option to get this output)."
     (let ((extension (file-name-extension (buffer-file-name))))
       ;; capture .h, .hpp, .hxx etc - all start with h
       (string-equal "h" (substring extension 0 1)))))
+
+(defun flycheck-clang-tidy-verify (checker)
+  "Verify CHECKER"
+  (let ((database (flycheck-clang-tidy-compdb)))
+    (list (flycheck-verification-result-new
+           :label "Compile Database"
+           :message (format "%s" (if database
+                                     (format "Found at %s"  database)
+                                   (format "No compilation database found in: %s" flycheck-clang-tidy-build-path)))
+           :face (if database 'success '(bold error))
+           ))))
+
 (flycheck-define-checker c/c++-clang-tidy
   "A C/C++ syntax checker using clang-tidy.
 
@@ -64,10 +76,9 @@ See URL `https://github.com/ch1bo/flycheck-clang-tidy'."
   :predicate (lambda () (and (flycheck-clang-tidy-compdb)
                         (flycheck-buffer-saved-p)))
   :enabled (lambda () (not (flycheck-clang-tidy-buffer-is-header)))
-
+  :verify flycheck-clang-tidy-verify
   :modes (c-mode c++-mode)
-  :working-directory flycheck-clang-tidy-find-default-directory
-  )
+  :working-directory flycheck-clang-tidy-find-default-directory)
 
 ;;;###autoload
 (defun flycheck-clang-tidy-setup ()
