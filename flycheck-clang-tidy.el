@@ -56,7 +56,7 @@ CMake option to get this output)."
   "A C/C++ syntax checker using clang-tidy.
 
 See URL `https://github.com/ch1bo/flycheck-clang-tidy'."
-  :command ("clang-tidy" "-p" (eval (flycheck-clang-tidy-compdb)) source-orignial)
+  :command ("clang-tidy" "-quiet" (eval (format "-p=%s" (flycheck-clang-tidy-compdb))) source-original)
   :error-patterns
   ((error line-start (file-name) ":" line ":" column ": error: " (message) line-end)
    (warning line-start (file-name) ":" line ":" column ": warning: " (message) line-end)
