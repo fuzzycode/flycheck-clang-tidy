@@ -41,7 +41,7 @@ CMake option to get this output)."
         (file-name-directory config_file_location))))
 
 (defun flycheck-clang-tidy-compdb ()
-  "Generate the option for the compilation database file"
+  "Generate the option for the compilation database file."
   (let ((database (concat (file-name-as-directory flycheck-clang-tidy-build-path) "compile_commands.json")))
     (when (file-exists-p database)
       database)))
@@ -54,7 +54,7 @@ CMake option to get this output)."
       (string-equal "h" (substring extension 0 1)))))
 
 (defun flycheck-clang-tidy-verify (checker)
-  "Verify CHECKER"
+  "Verify CHECKER."
   (let ((database (flycheck-clang-tidy-compdb)))
     (list (flycheck-verification-result-new
            :label "Compile Database"
