@@ -71,8 +71,7 @@ See URL `https://github.com/ch1bo/flycheck-clang-tidy'."
   :command ("clang-tidy" "-quiet" (eval (format "-p=%s" (flycheck-clang-tidy-compdb))) source-original)
   :error-patterns
   ((error line-start (file-name) ":" line ":" column ": error: " (message) line-end)
-   (warning line-start (file-name) ":" line ":" column ": warning: " (message) line-end)
-   (info line-start (file-name) ":" line ":" column ": note: " (message) line-end))
+   (warning line-start (file-name) ":" line ":" column ": warning: " (message) line-end))
   :predicate (lambda () (and (flycheck-clang-tidy-compdb)
                         (flycheck-buffer-saved-p)))
   :enabled (lambda () (not (flycheck-clang-tidy-buffer-is-header)))
